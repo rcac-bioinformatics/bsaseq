@@ -1,0 +1,37 @@
+# --- Python Bytecode ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Distribution / Builds ---
+# You generally don't commit 'dist' as it contains generated wheels/tarballs
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# --- Virtual Environments ---
+# Never commit the library files themselves
+.venv/
+venv/
+env/
+ENV/
+
+# --- Testing & Code Quality ---
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.tox/
+.mypy_cache/
+
+# --- IDE & Editor Settings ---
+.claude/
+.vscode/
+.idea/
+*.swp
+
+# --- OS Generated Files ---
+.DS_Store
+Thumbs.db
