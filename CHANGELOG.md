@@ -110,5 +110,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-[Unreleased]: https://github.com/username/bsaseq/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/username/bsaseq/releases/tag/v1.0.0
+[Unreleased]: https://github.com/rcac-bioinformatics/bsaseq/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/rcac-bioinformatics/bsaseq/releases/tag/v1.0.0

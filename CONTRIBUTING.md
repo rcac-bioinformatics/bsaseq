@@ -40,7 +40,7 @@ This project follows a standard code of conduct. Please be respectful and constr
 
 ```bash
 # Clone your fork
-git clone https://github.com/YOUR_USERNAME/bsaseq.git
+git clone https://github.com/rcac-bioinformatics/bsaseq.git
 cd bsaseq
 
 # Create virtual environment

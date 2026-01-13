@@ -72,12 +72,11 @@ docs = [
 bsaseq = "bsaseq.cli:cli"
 
 [project.urls]
-Homepage = "https://github.com/username/bsaseq"
+Homepage = "https://github.com/rcac-bioinformatics/bsaseq"
 Documentation = "https://bsaseq.readthedocs.io"
-Repository = "https://github.com/username/bsaseq"
-Issues = "https://github.com/username/bsaseq/issues"
-Changelog = "https://github.com/username/bsaseq/blob/main/CHANGELOG.md"
-
+Repository = "https://github.com/rcac-bioinformatics/bsaseq"
+Issues = "https://github.com/rcac-bioinformatics/bsaseq/issues"
+Changelog = "https://github.com/rcac-bioinformatics/bsaseq/blob/main/CHANGELOG.md"
 [tool.hatch.build.targets.sdist]
 include = [
     "/src",

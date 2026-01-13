@@ -75,7 +75,7 @@ def cli(ctx: click.Context, verbose: bool) -> None:
 
     \b
     Documentation:
-        https://github.com/username/bsaseq
+        https://github.com/rcac-bioinformatics/bsaseq
     """
     import logging
 
