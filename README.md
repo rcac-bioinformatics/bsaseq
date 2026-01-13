@@ -26,6 +26,13 @@ from VCF input to annotated candidate genes.
 pip install bsaseq
 ```
 
+### From Bioconda
+
+```bash
+conda install -c bioconda bsaseq
+```
+
+
 ### From source
 
 ```bash
