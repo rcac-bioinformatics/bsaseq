@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING
 
 import numpy as np
 
-from bsaseq.utils.logging import get_logger, print_warning
+from bsaseq.utils.logging import get_logger
 
 if TYPE_CHECKING:
     from bsaseq.annotation.snpeff import VariantAnnotation
@@ -344,7 +344,7 @@ def identify_candidate_regions(
     # Find significant windows and create regions
     all_regions = []
 
-    for chrom, chrom_wins in chrom_windows.items():
+    for _chrom, chrom_wins in chrom_windows.items():
         # Sort by start position
         chrom_wins.sort(key=lambda w: w.start)
 
@@ -427,7 +427,7 @@ def identify_candidate_regions_percentile(
     # Find significant windows and create regions
     all_regions = []
 
-    for chrom, chrom_wins in chrom_windows.items():
+    for _chrom, chrom_wins in chrom_windows.items():
         # Sort by start position
         chrom_wins.sort(key=lambda w: w.start)
 
@@ -532,7 +532,7 @@ def count_variants_in_regions(
     Returns:
         Dictionary mapping region index to variant count.
     """
-    counts: dict[int, int] = {i: 0 for i in range(len(regions))}
+    counts: dict[int, int] = dict.fromkeys(range(len(regions)), 0)
 
     for variant in variants:
         for i, region in enumerate(regions):

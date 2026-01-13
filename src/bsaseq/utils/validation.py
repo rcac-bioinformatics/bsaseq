@@ -6,8 +6,8 @@ and analysis parameters before running the analysis pipeline.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 from bsaseq.utils.logging import get_logger
 

@@ -6,8 +6,8 @@ for common error conditions encountered during BSA analysis.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 from rich.console import Console
 from rich.panel import Panel
@@ -203,7 +203,7 @@ def format_no_variants_error(reason: str) -> str:
     Returns:
         Formatted error message with suggestions.
     """
-    msg = f"No variants remaining after filtering.\n\n"
+    msg = "No variants remaining after filtering.\n\n"
     msg += f"Reason: {reason}\n\n"
     msg += "Suggestions:\n"
     msg += "  - Lower the --min-dp threshold (current filter may be too strict)\n"
@@ -245,7 +245,7 @@ def format_snpeff_error(reason: str, command: str | None = None) -> str:
     Returns:
         Formatted error message.
     """
-    msg = f"snpEff annotation failed.\n\n"
+    msg = "snpEff annotation failed.\n\n"
     msg += f"Reason: {reason}\n\n"
     msg += "Suggestions:\n"
     msg += "  - Run 'bsaseq check-snpeff' to verify installation\n"

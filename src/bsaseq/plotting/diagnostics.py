@@ -290,7 +290,7 @@ def _add_stats_text(
         fontsize=8,
         verticalalignment=va,
         horizontalalignment=ha,
-        bbox=dict(boxstyle="round", facecolor="white", alpha=0.8),
+        bbox={"boxstyle": "round", "facecolor": "white", "alpha": 0.8},
     )
 
 

@@ -7,7 +7,6 @@ formatted console output with timestamps and progress bars.
 from __future__ import annotations
 
 import logging
-import sys
 from typing import TYPE_CHECKING
 
 from rich.console import Console

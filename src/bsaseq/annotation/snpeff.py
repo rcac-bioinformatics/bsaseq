@@ -8,10 +8,11 @@ from __future__ import annotations
 
 import shutil
 import subprocess
+from collections.abc import Iterator
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
-from typing import TYPE_CHECKING, Iterator
+from typing import TYPE_CHECKING
 
 from bsaseq.utils.logging import get_logger
 

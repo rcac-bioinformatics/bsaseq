@@ -1,5 +1,20 @@
 """Utility functions for bsaseq."""
 
+from bsaseq.utils.errors import (
+    BSASeqError,
+    display_error,
+    display_warning,
+    format_file_not_found,
+    format_insufficient_samples,
+    format_invalid_parameter,
+    format_missing_format_field,
+    format_no_candidates_error,
+    format_no_variants_error,
+    format_output_error,
+    format_sample_not_found,
+    format_sample_overlap,
+    format_snpeff_error,
+)
 from bsaseq.utils.logging import (
     create_progress,
     get_logger,
@@ -31,21 +46,6 @@ from bsaseq.utils.validation import (
     validate_parameters,
     validate_samples,
     validate_vcf,
-)
-from bsaseq.utils.errors import (
-    BSASeqError,
-    display_error,
-    display_warning,
-    format_file_not_found,
-    format_invalid_parameter,
-    format_insufficient_samples,
-    format_missing_format_field,
-    format_no_candidates_error,
-    format_no_variants_error,
-    format_output_error,
-    format_sample_not_found,
-    format_sample_overlap,
-    format_snpeff_error,
 )
 
 __all__ = [
