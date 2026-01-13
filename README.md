@@ -29,7 +29,7 @@ pip install bsaseq
 ### From source
 
 ```bash
-git clone https://github.com/username/bsaseq.git
+git clone https://github.com/rcac-bioinformatics/bsaseq.git
 cd bsaseq
 pip install -e .
 ```
