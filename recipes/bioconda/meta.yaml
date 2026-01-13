@@ -1,0 +1,54 @@
+{% set name = "bsaseq" %}
+{% set version = "1.0.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: <SHA256_HASH_HERE>
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+  entry_points:
+    - bsaseq = bsaseq.cli:cli
+
+requirements:
+  host:
+    - python >=3.9,<3.14
+    - pip
+    - hatchling
+  run:
+    - python >=3.9,<3.14
+    - cyvcf2 >=0.30.0
+    - numpy >=1.21.0
+    - pandas >=1.4.0
+    - scipy >=1.7.0
+    - matplotlib-base >=3.5.0
+    - click >=8.0.0
+    - rich >=12.0.0
+
+test:
+  imports:
+    - bsaseq
+  commands:
+    - bsaseq --help
+
+about:
+  home: https://github.com/username/bsaseq
+  license: MIT
+  license_family: MIT
+  license_file: LICENSE
+  summary: Bulk Segregant Analysis for QTL mapping
+  description: |
+    bsaseq identifies genomic loci controlling traits by comparing allele
+    frequencies between phenotypically distinct pooled DNA samples.
+  dev_url: https://github.com/username/bsaseq
+  doc_url: https://bsaseq.readthedocs.io
+
+extra:
+  recipe-maintainers:
+    - your-github-username

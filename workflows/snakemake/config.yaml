@@ -1,0 +1,112 @@
+# bsaseq Snakemake Configuration
+# ===============================
+#
+# Copy this file and modify for your analysis.
+#
+# Usage:
+#   snakemake --configfile config.yaml --cores 1
+#   snakemake --configfile config.yaml --cores 1 --use-conda
+
+
+# =============================================================================
+# Required parameters
+# =============================================================================
+
+# Path to input VCF file (bgzipped recommended)
+vcf: "path/to/variants.vcf.gz"
+
+# Sample name(s) for high bulk (mutant pool)
+# For multiple samples, use comma-separated list: "mut1,mut2,mut3"
+high_bulk: "mutant"
+
+# Sample name(s) for low bulk (wild-type pool)
+# For multiple samples, use comma-separated list: "wt1,wt2,wt3"
+low_bulk: "wildtype"
+
+
+# =============================================================================
+# Output settings
+# =============================================================================
+
+# Output directory
+outdir: "results"
+
+
+# =============================================================================
+# Analysis parameters
+# =============================================================================
+
+# Sliding window settings
+window_size: 1000000    # Window size in bp (default: 1 Mb)
+step_size: 250000       # Step between windows (default: 250 kb)
+
+# Variant filtering
+min_dp: 10              # Minimum total read depth
+max_dp: 200             # Maximum total read depth (excludes repeats)
+min_gq: 20              # Minimum genotype quality
+min_qual: 30            # Minimum variant quality score
+min_variants: 5         # Minimum variants per window
+
+# Candidate detection
+z_threshold: 3.0        # Z-score threshold for significance
+mode: "recessive"       # Inheritance mode: "recessive" or "dominant"
+
+
+# =============================================================================
+# Annotation settings (optional)
+# =============================================================================
+
+# Enable snpEff annotation
+annotate: false
+
+# snpEff database name (required if annotate: true)
+# Examples: "Arabidopsis_thaliana", "Sorghum_bicolor", "Zea_mays"
+# Run "snpEff databases" to see available databases
+snpeff_db: null
+
+# Memory allocation for snpEff
+snpeff_mem: "4g"
+
+
+# =============================================================================
+# Plot settings
+# =============================================================================
+
+# Plot output format: "png", "pdf", or "both"
+plot_format: "both"
+
+
+# =============================================================================
+# Example configurations
+# =============================================================================
+#
+# Basic recessive mapping:
+# ------------------------
+# vcf: "pooled_calls.vcf.gz"
+# high_bulk: "mut1"
+# low_bulk: "wt1"
+# outdir: "results/recessive"
+# mode: "recessive"
+#
+#
+# Multi-sample with annotation:
+# -----------------------------
+# vcf: "deep_seq.vcf.gz"
+# high_bulk: "mut_rep1,mut_rep2,mut_rep3"
+# low_bulk: "wt_rep1,wt_rep2,wt_rep3"
+# outdir: "results/annotated"
+# min_dp: 30
+# max_dp: 500
+# annotate: true
+# snpeff_db: "Arabidopsis_thaliana"
+#
+#
+# Dominant trait with relaxed thresholds:
+# ----------------------------------------
+# vcf: "variants.vcf.gz"
+# high_bulk: "affected"
+# low_bulk: "unaffected"
+# outdir: "results/dominant"
+# mode: "dominant"
+# z_threshold: 2.5
+# min_dp: 5

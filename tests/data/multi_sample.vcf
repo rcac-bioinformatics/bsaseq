@@ -1,0 +1,17 @@
+##fileformat=VCFv4.2
+##FILTER=<ID=PASS,Description="All filters passed">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allelic depths">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Read depth">
+##FORMAT=<ID=GQ,Number=1,Type=Integer,Description="Genotype quality">
+##contig=<ID=chr1,length=10000000>
+##contig=<ID=chr2,length=8000000>
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO	FORMAT	MUT1	MUT2	WT1	WT2
+chr1	100000	.	A	G	50.0	PASS	.	GT:AD:DP:GQ	0/1:5,45:50:99	0/1:3,47:50:99	0/1:40,10:50:99	0/1:42,8:50:99
+chr1	200000	.	C	T	50.0	PASS	.	GT:AD:DP:GQ	0/1:10,40:50:99	0/1:8,42:50:99	0/1:35,15:50:99	0/1:38,12:50:99
+chr1	300000	.	G	A	50.0	PASS	.	GT:AD:DP:GQ	0/1:15,35:50:99	0/1:12,38:50:99	0/1:30,20:50:99	0/1:32,18:50:99
+chr1	400000	.	T	C	50.0	PASS	.	GT:AD:DP:GQ	0/1:8,42:50:99	0/1:6,44:50:99	0/1:38,12:50:99	0/1:40,10:50:99
+chr1	500000	.	A	T	50.0	PASS	.	GT:AD:DP:GQ	0/1:12,38:50:99	0/1:10,40:50:99	0/1:32,18:50:99	0/1:35,15:50:99
+chr1	600000	.	C	G	50.0	PASS	.	GT:AD:DP:GQ	0/1:6,44:50:99	0/1:4,46:50:99	0/1:42,8:50:99	0/1:44,6:50:99
+chr2	150000	.	G	T	50.0	PASS	.	GT:AD:DP:GQ	0/1:20,30:50:99	0/1:18,32:50:99	0/1:28,22:50:99	0/1:30,20:50:99
+chr2	250000	.	A	C	50.0	PASS	.	GT:AD:DP:GQ	0/1:25,25:50:99	0/1:22,28:50:99	0/1:26,24:50:99	0/1:24,26:50:99

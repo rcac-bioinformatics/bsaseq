@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+  # Basic bsaseq container (without snpEff)
+  bsaseq:
+    build:
+      context: .
+      args:
+        INSTALL_SNPEFF: "false"
+    volumes:
+      - ./data:/data
+      - ./results:/results
+    working_dir: /data
+    # Example usage:
+    # docker-compose run bsaseq run --vcf input.vcf.gz --high-bulk MUT --low-bulk WT --out /results/analysis
+
+  # bsaseq with snpEff for annotation
+  bsaseq-snpeff:
+    build:
+      context: .
+      args:
+        INSTALL_SNPEFF: "true"
+    volumes:
+      - ./data:/data
+      - ./results:/results
+      - ./snpeff_data:/opt/snpEff/data
+    working_dir: /data
+    # Example usage:
+    # docker-compose run bsaseq-snpeff run --vcf input.vcf.gz --high-bulk MUT --low-bulk WT --out /results/analysis --annotate --snpeff-db Sorghum_bicolor
+
+  # List samples in a VCF
+  samples:
+    build:
+      context: .
+      args:
+        INSTALL_SNPEFF: "false"
+    volumes:
+      - ./data:/data:ro
+    working_dir: /data
+    entrypoint: ["bsaseq", "samples"]
+    # Example usage:
+    # docker-compose run samples --vcf input.vcf.gz
+
+  # Generate plots from existing output
+  plot:
+    build:
+      context: .
+      args:
+        INSTALL_SNPEFF: "false"
+    volumes:
+      - ./data:/data:ro
+      - ./results:/results
+    working_dir: /data
+    entrypoint: ["bsaseq", "plot"]
+    # Example usage:
+    # docker-compose run plot --windows /results/analysis_windows.tsv --regions /results/analysis_regions.tsv --out /results/new_plots

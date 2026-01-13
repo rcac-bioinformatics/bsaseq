@@ -1,0 +1,2 @@
+[console_scripts]
+bsaseq = bsaseq.cli:cli

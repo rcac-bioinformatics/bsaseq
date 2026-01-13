@@ -1,0 +1,186 @@
+"""
+bsaseq Snakemake Pipeline
+Bulk Segregant Analysis for QTL mapping
+
+Usage:
+    snakemake --configfile config.yaml --cores 1
+"""
+
+from pathlib import Path
+
+# Load configuration
+configfile: "config.yaml"
+
+# Required config
+VCF = config["vcf"]
+HIGH_BULK = config["high_bulk"]
+LOW_BULK = config["low_bulk"]
+OUTDIR = config.get("outdir", "results")
+
+# Optional config with defaults
+WINDOW_SIZE = config.get("window_size", 1000000)
+STEP_SIZE = config.get("step_size", 250000)
+MIN_DP = config.get("min_dp", 10)
+MAX_DP = config.get("max_dp", 200)
+MIN_GQ = config.get("min_gq", 20)
+MIN_QUAL = config.get("min_qual", 30)
+MIN_VARIANTS = config.get("min_variants", 5)
+Z_THRESHOLD = config.get("z_threshold", 3.0)
+MODE = config.get("mode", "recessive")
+ANNOTATE = config.get("annotate", False)
+SNPEFF_DB = config.get("snpeff_db", None)
+SNPEFF_MEM = config.get("snpeff_mem", "4g")
+PLOT_FORMAT = config.get("plot_format", "both")
+
+# Output prefix
+PREFIX = f"{OUTDIR}/bsa"
+
+
+# Target files
+rule all:
+    input:
+        f"{PREFIX}_summary.txt",
+        f"{PREFIX}_variants.tsv",
+        f"{PREFIX}_windows.tsv",
+        f"{PREFIX}_genome_wide.png",
+
+
+rule bsaseq_run:
+    """Run complete BSA analysis pipeline."""
+    input:
+        vcf=VCF,
+    output:
+        summary=f"{PREFIX}_summary.txt",
+        variants=f"{PREFIX}_variants.tsv",
+        windows=f"{PREFIX}_windows.tsv",
+        regions=f"{PREFIX}_regions.tsv",
+        regions_bed=f"{PREFIX}_regions.bed",
+        candidates=f"{PREFIX}_candidates.tsv",
+        plot_png=f"{PREFIX}_genome_wide.png",
+    params:
+        high_bulk=HIGH_BULK,
+        low_bulk=LOW_BULK,
+        window_size=WINDOW_SIZE,
+        step_size=STEP_SIZE,
+        min_dp=MIN_DP,
+        max_dp=MAX_DP,
+        min_gq=MIN_GQ,
+        min_qual=MIN_QUAL,
+        min_variants=MIN_VARIANTS,
+        z_threshold=Z_THRESHOLD,
+        mode=MODE,
+        annotate="--annotate" if ANNOTATE else "--no-annotate",
+        snpeff_db=f"--snpeff-db {SNPEFF_DB}" if SNPEFF_DB else "",
+        snpeff_mem=f"--snpeff-mem {SNPEFF_MEM}" if SNPEFF_DB else "",
+        plot_format=PLOT_FORMAT,
+        prefix=PREFIX,
+    log:
+        f"{OUTDIR}/logs/bsaseq.log",
+    benchmark:
+        f"{OUTDIR}/benchmarks/bsaseq.txt"
+    conda:
+        "environment.yaml"
+    threads: 1
+    resources:
+        mem_mb=8000,
+        runtime=120,
+    shell:
+        """
+        mkdir -p {OUTDIR}/logs
+
+        bsaseq run \
+            --vcf {input.vcf} \
+            --high-bulk "{params.high_bulk}" \
+            --low-bulk "{params.low_bulk}" \
+            --out {params.prefix} \
+            --window-size {params.window_size} \
+            --step-size {params.step_size} \
+            --min-dp {params.min_dp} \
+            --max-dp {params.max_dp} \
+            --min-gq {params.min_gq} \
+            --min-qual {params.min_qual} \
+            --min-variants {params.min_variants} \
+            --z-threshold {params.z_threshold} \
+            --mode {params.mode} \
+            {params.annotate} \
+            {params.snpeff_db} \
+            {params.snpeff_mem} \
+            --plot \
+            --plot-format {params.plot_format} \
+            2>&1 | tee {log}
+        """
+
+
+rule regenerate_plots:
+    """Regenerate plots from existing analysis output."""
+    input:
+        windows=f"{PREFIX}_windows.tsv",
+        regions=f"{PREFIX}_regions.tsv",
+        variants=f"{PREFIX}_variants.tsv",
+    output:
+        plot=f"{PREFIX}_regenerated_genome_wide.png",
+    params:
+        prefix=f"{PREFIX}_regenerated",
+        plot_format=PLOT_FORMAT,
+    log:
+        f"{OUTDIR}/logs/plot.log",
+    conda:
+        "environment.yaml"
+    shell:
+        """
+        bsaseq plot \
+            --windows {input.windows} \
+            --regions {input.regions} \
+            --variants {input.variants} \
+            --out {params.prefix} \
+            --format {params.plot_format} \
+            2>&1 | tee {log}
+        """
+
+
+rule annotate_candidates:
+    """Annotate candidate variants with snpEff (if not done in main run)."""
+    input:
+        candidates=f"{PREFIX}_candidates.tsv",
+    output:
+        annotated=f"{PREFIX}_annotated_candidates.tsv",
+        genes=f"{PREFIX}_candidate_genes.tsv",
+    params:
+        snpeff_db=SNPEFF_DB if SNPEFF_DB else "REQUIRED",
+        snpeff_mem=SNPEFF_MEM,
+        prefix=PREFIX,
+    log:
+        f"{OUTDIR}/logs/annotate.log",
+    conda:
+        "environment.yaml"
+    shell:
+        """
+        bsaseq annotate \
+            --candidates {input.candidates} \
+            --snpeff-db {params.snpeff_db} \
+            --snpeff-mem {params.snpeff_mem} \
+            --out {params.prefix} \
+            2>&1 | tee {log}
+        """
+
+
+rule list_samples:
+    """List sample names in the VCF file."""
+    input:
+        vcf=VCF,
+    output:
+        samples=f"{OUTDIR}/samples.txt",
+    conda:
+        "environment.yaml"
+    shell:
+        """
+        bsaseq samples --vcf {input.vcf} > {output.samples}
+        """
+
+
+rule clean:
+    """Remove all output files."""
+    shell:
+        """
+        rm -rf {OUTDIR}
+        """

@@ -1,0 +1,15 @@
+name: bsaseq
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python>=3.9,<3.14
+  - pip
+  - tabix
+  - htslib
+  # Optional: uncomment for snpEff annotation
+  # - snpeff
+  # - openjdk
+  - pip:
+      - bsaseq
