@@ -38,8 +38,8 @@ class TestCliBasics:
         """Test CLI with no arguments shows usage."""
         result = runner.invoke(cli, [])
 
-        # Click returns exit code 2 when no subcommand is provided
-        assert result.exit_code == 2
+        # Click returns exit code 0 when no subcommand is provided
+        assert result.exit_code == 0
         # Should still show available commands in usage message
         assert "run" in result.output
         assert "samples" in result.output
