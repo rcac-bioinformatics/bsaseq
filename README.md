@@ -1,6 +1,6 @@
 # bsaseq
 
-[![PyPI version](https://badge.fury.io/py/bsaseq.svg)](https://badge.fury.io/py/bsaseq)
+[![PyPI version](https://badge.fury.io/py/bsaseq.svg)](https://pypi.org/project/bsaseq/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **Bulk Segregant Analysis for QTL mapping from pooled whole-genome sequencing data.**
